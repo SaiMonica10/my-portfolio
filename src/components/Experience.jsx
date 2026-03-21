@@ -7,6 +7,8 @@ const experiences = [
     company: 'ESDS Software Solutions',
     period: 'Jun 2025 – Present',
     location: 'Chennai, India',
+
+
     points: [
       'Assisted in AI/ML research and experimentation, focusing on prompt engineering and evaluating LLM performance for specific use cases.',
       'Designed and refined prompts to improve the quality and consistency of generated content and outputs.',
