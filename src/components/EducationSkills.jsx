@@ -40,38 +40,17 @@ const EducationSkills = () => {
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.7 }}
       >
-        <span className="gradient-text">Education & Skills</span>
+        <span className="gradient-text">Skills & Education</span>
       </motion.h2>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', marginTop: '4rem' }}>
         
-        {/* Education Column */}
+        {/* Skills Column */}
         <motion.div
            initial={{ opacity: 0, x: -30 }}
            whileInView={{ opacity: 1, x: 0 }}
            viewport={{ once: true, amount: 0.2 }}
            transition={{ duration: 0.7 }}
-        >
-          <h3 style={{ fontSize: '2rem', marginBottom: '2rem', borderBottom: '1px solid var(--glass-border)', paddingBottom: '1rem' }}>
-            <span className="gradient-text">Education</span>
-          </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            {education.map((edu, idx) => (
-              <div key={idx} className="glass-card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
-                <span style={{ color: 'var(--accent-color)', fontSize: '0.9rem', fontWeight: '600', marginBottom: '0.5rem' }}>{edu.period}</span>
-                <h4 style={{ fontSize: '1.3rem', marginBottom: '0.3rem' }}>{edu.degree}</h4>
-                <p style={{ color: 'var(--text-secondary)' }}>{edu.institution}, {edu.location}</p>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Skills Column */}
-        <motion.div
-           initial={{ opacity: 0, x: 30 }}
-           whileInView={{ opacity: 1, x: 0 }}
-           viewport={{ once: true, amount: 0.2 }}
-           transition={{ duration: 0.7, delay: 0.2 }}
         >
           <h3 style={{ fontSize: '2rem', marginBottom: '2rem', borderBottom: '1px solid var(--glass-border)', paddingBottom: '1rem' }}>
             <span className="gradient-text">Technical Skills</span>
@@ -94,6 +73,27 @@ const EducationSkills = () => {
               >
                 <h5 style={{ margin: 0, fontWeight: '600', letterSpacing: '0.5px' }}>{skill}</h5>
               </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Education Column */}
+        <motion.div
+           initial={{ opacity: 0, x: 30 }}
+           whileInView={{ opacity: 1, x: 0 }}
+           viewport={{ once: true, amount: 0.2 }}
+           transition={{ duration: 0.7, delay: 0.2 }}
+        >
+          <h3 style={{ fontSize: '2rem', marginBottom: '2rem', borderBottom: '1px solid var(--glass-border)', paddingBottom: '1rem' }}>
+            <span className="gradient-text">Education</span>
+          </h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            {education.map((edu, idx) => (
+              <div key={idx} className="glass-card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+                <span style={{ color: 'var(--accent-color)', fontSize: '0.9rem', fontWeight: '600', marginBottom: '0.5rem' }}>{edu.period}</span>
+                <h4 style={{ fontSize: '1.3rem', marginBottom: '0.3rem' }}>{edu.degree}</h4>
+                <p style={{ color: 'var(--text-secondary)' }}>{edu.institution}, {edu.location}</p>
+              </div>
             ))}
           </div>
         </motion.div>

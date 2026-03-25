@@ -1,7 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const Navbar = () => {
+  const [activeSection, setActiveSection] = useState('');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['about', 'education-skills', 'experience', 'projects'];
+      let current = '';
+      
+      for (const id of sections) {
+        const element = document.getElementById(id);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          // Active when the section crosses the middle of the screen
+          if (rect.top <= window.innerHeight * 0.4 && rect.bottom >= window.innerHeight * 0.4) {
+            current = id;
+          }
+        }
+      }
+      
+      if (window.scrollY < 150) {
+        current = '';
+      }
+      
+      setActiveSection(current);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    setTimeout(handleScroll, 100);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navItems = [
+    { id: 'about', label: 'About' },
+    { id: 'education-skills', label: 'Skills' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'projects', label: 'Projects' }
+  ];
+
   return (
     <motion.nav
       className="nav-header"
@@ -39,9 +76,37 @@ const Navbar = () => {
       </div>
       
       <div className="nav-links" style={{ display: 'flex', gap: '1.5rem' }}>
-        <a href="#about" style={{ color: 'var(--text-secondary)', fontSize: '1rem' }}>About</a>
-        <a href="#projects" style={{ color: 'var(--text-secondary)', fontSize: '1rem' }}>Projects</a>
-        <a href="#experience" style={{ color: 'var(--text-secondary)', fontSize: '1rem' }}>Experience</a>
+        {navItems.map((item) => {
+          const isActive = activeSection === item.id;
+          return (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              style={{ 
+                color: isActive ? 'var(--accent-color)' : 'var(--text-secondary)', 
+                fontSize: '1rem',
+                position: 'relative',
+                padding: '0.2rem 0',
+                textDecoration: 'none',
+                transition: 'color 0.3s'
+              }}
+            >
+              {item.label}
+              <span
+                style={{
+                  position: 'absolute',
+                  bottom: -4,
+                  left: 0,
+                  height: '2px',
+                  background: 'var(--accent-color)',
+                  width: isActive ? '100%' : '0%',
+                  transition: 'width 0.3s ease-out',
+                  borderRadius: '2px'
+                }}
+              />
+            </a>
+          );
+        })}
       </div>
     </motion.nav>
   );

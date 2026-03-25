@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import { Mail, Phone, Github, Linkedin } from 'lucide-react';
 
 const certifications = [
-  { name: 'AI Engineer Agentic Track: The Complete Agent & MCP Course', issuer: 'Udemy', date: 'Jan 2025' },
-  { name: 'Python (Basics)', issuer: 'HackerRank', date: 'May 2025' }, // Future date or typo in resume, kept as is
-  { name: 'AI-900: Microsoft Azure AI Fundamentals', issuer: 'Microsoft', date: 'Dec 2023 – Jul 2024' }
+  { name: 'SQL for Data Analysis: Advanced SQL Querying Techniques', issuer: 'Udemy', date: 'Jan 2026', link: 'https://drive.google.com/file/d/12X5cq_r1o6dV3_ccn9EtHQB4pZXoX0Ni/view?usp=sharing' },
+  { name: 'AI Engineer Agentic Track: The Complete Agent & MCP Course', issuer: 'Udemy', date: 'Nov 2025', link: 'https://drive.google.com/file/d/1dsANvPaCBJaodykSxzR8ExjWzeON5EDa/view?usp=sharing' },
+  { name: 'AI-900: Microsoft Azure AI Fundamentals', issuer: 'Microsoft', date: 'Jun 2023', link: 'https://drive.google.com/file/d/1qR6ECpELvh7sfeS_DcDpOUEmpk9ymM16/view?usp=sharing' }
 ];
 
 const Footer = () => {
@@ -22,11 +22,19 @@ const Footer = () => {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7 }}
           >
-            <h3 style={{ fontSize: '2rem', marginBottom: '2rem', color: 'var(--text-primary)' }}>Certifications</h3>
+            <h3 style={{ fontSize: '2rem', marginBottom: '2rem' }}><span className="gradient-text">Certifications</span></h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {certifications.map((cert, idx) => (
                 <div key={idx} style={{ padding: '1.5rem', background: 'var(--glass-bg)', borderRadius: '12px', border: '1px solid var(--glass-border)' }}>
-                  <h4 style={{ fontSize: '1.1rem', marginBottom: '0.3rem', color: 'var(--text-primary)' }}>{cert.name}</h4>
+                  <h4 style={{ fontSize: '1.1rem', marginBottom: '0.3rem', color: 'var(--text-primary)' }}>
+                    {cert.link ? (
+                      <a href={cert.link} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-primary)', textDecoration: 'none' }}>
+                        {cert.name} <span style={{ fontSize: '0.8rem', opacity: 0.7, marginLeft: '4px' }}>↗</span>
+                      </a>
+                    ) : (
+                      cert.name
+                    )}
+                  </h4>
                   <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
                     <span>{cert.issuer}</span>
                     <span style={{ color: 'var(--accent-color)' }}>{cert.date}</span>
@@ -71,9 +79,6 @@ const Footer = () => {
                 </a>
                 <a href="https://github.com/SaiMonica10" target="_blank" rel="noopener noreferrer" className="btn" aria-label="GitHub" style={{ padding: '0.8rem', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#000000', borderColor: 'rgba(255, 255, 255, 0.2)' }}>
                   <Github size={22} color="#ffffff" fill="currentColor" strokeWidth={0} />
-                </a>
-                <a href="https://leetcode.com/u/saimonica10/" target="_blank" rel="noopener noreferrer" className="btn" aria-label="LeetCode" style={{ padding: '0.8rem', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#000000', borderColor: 'rgba(255, 255, 255, 0.2)' }}>
-                  <svg viewBox="0 0 24 24" width="22" height="22" fill="#ffffff" xmlns="http://www.w3.org/2000/svg"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114l5.7-5.545c.545-.533.553-1.41.019-1.951A1.375 1.375 0 0 0 13.483 0zm0 0" /></svg>
                 </a>
               </div>
             </div>
