@@ -2,17 +2,18 @@ import React from 'react';
 import { motion } from 'framer-motion';
 const Hero = () => {
   return (
-    <section className="section container hero-container" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '4rem' }}>
-      <div style={{ position: 'relative', zIndex: 10, maxWidth: '600px', flex: '1 1 300px' }}>
+    <section className="section container hero-container" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+      <div style={{ position: 'relative', zIndex: 10, maxWidth: '800px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 2.2 }} // Wait for loader
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
         >
-          <div className="badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+          {/* <div className="badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent-color)', boxShadow: '0 0 8px var(--accent-color)' }} className="pulse-dot"></span>
             Available for Hire
-          </div>
+          </div> */}
           <h1 style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', lineHeight: 1.1, margin: '1rem 0' }}>
             Hi, I'm <br />
             <span className="animated-gradient-text">Sai Monica R.</span>
@@ -23,6 +24,7 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 2.5 }}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
         >
           <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', color: 'var(--text-secondary)', fontWeight: 400, marginBottom: '2rem' }}>
             Data Scientist | AI/ML Engineer
@@ -37,7 +39,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 2.8 }}
-          style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}
+          style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', justifyContent: 'center' }}
         >
           <a href="#projects" className="btn btn-primary">
             View Projects
@@ -47,17 +49,6 @@ const Hero = () => {
           </a>
         </motion.div>
       </div>
-
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 2.5 }}
-        style={{ flex: '1 1 300px', display: 'flex', justifyContent: 'center', position: 'relative', zIndex: 10, minWidth: '300px' }}
-      >
-        <div className="elegant-frame floating">
-          <img src="/hero-photo.jpeg" alt="Sai Monica" className="elegant-photo" />
-        </div>
-      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div

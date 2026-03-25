@@ -39,7 +39,7 @@ const About = () => {
            className="about-text-content"
         >
           <h3 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--text-primary)' }}>
-            Hi, I'm Sai Monica!
+            Nice to meet you!
           </h3>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', lineHeight: '1.8', marginBottom: '1.5rem' }}>
             I am a passionate AI/ML Full-Stack Engineer with a Master's degree in Data Science from Vellore Institute of Technology. I specialize in building scalable, AI-driven applications and secure REST APIs that bridge the gap between complex machine learning models and intuitive user interfaces.
