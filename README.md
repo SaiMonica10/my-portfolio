@@ -1,75 +1,40 @@
-# Sai Monica R. - Personal Portfolio
+# Sai Monica R — Portfolio
 
-A modern, highly interactive personal portfolio website showcasing my experience, projects, and skills as a Data Scientist and AI/ML Full-Stack Engineer. Built with React and Vite, this portfolio uses a sleek "tech HUD / elegant glass" aesthetic with customized CSS animations and framer-motion transitions.
+Retro, block-based "world map" portfolio with a plain **Recruiter Mode**.
+Built with React + Vite, deployed on Vercel.
 
-## 🚀 Features
+- **Game mode:** start screen → world map of six blocks → section screens.
+  Arrow keys / WASD move, Enter opens, Esc returns to the map.
+- **Recruiter Mode:** a clean single page with the same content. Toggle it in
+  the top bar, or link straight to it with `?mode=recruiter`.
 
-- **Modern & Premium Design:** A dark-themed, 3D-inspired layout with glassmorphism components and sweeping light reflections.
-- **Interactive Animations:** Smooth scroll animations and element entrances powered by `framer-motion`.
-- **Responsive Layout:** fully optimized for both desktop and mobile devices.
-- **Dynamic Projects & Experience:** Easily updatable sections detailing professional history and technical projects.
+## Editing content
 
-## 🛠️ Technologies Used
+All text lives in [`src/data/content.js`](src/data/content.js); both modes
+render from it.
 
-- **React.js** - UI Library
-- **Vite** - Build Tool & Development Server
-- **Framer Motion** - Animation Library
-- **Lucide React** - SVG Icons
-- **Vanilla CSS** - Custom styling, CSS Variables, and Keyframe Animations
+The resume button points at `public/Sai_Monica_R_Resume.pdf`.
 
-## 📦 Getting Started
+## Commands
 
-To get a local copy up and running, follow these simple steps:
-
-### Prerequisites
-Make sure you have Node.js and npm installed on your machine.
-
-### Installation
-
-1. **Clone the repository** (if you haven't already):
-   ```sh
-   git clone <your-repo-url>
-   ```
-
-2. **Navigate to the project directory:**
-   ```sh
-   cd portfolio-new
-   ```
-
-3. **Install dependencies:**
-   ```sh
-   npm install
-   ```
-
-4. **Start the development server:**
-   ```sh
-   npm run dev
-   ```
-
-5. **Open your browser:**
-   Navigate to `http://localhost:5173/` to view the live site.
-
-## 📁 Project Structure
-
-```text
-portfolio-new/
-├── public/               # Static assets (images, icons)
-├── src/
-│   ├── components/       # React components (Navbar, Hero, About, Experience, Projects, Footer)
-│   ├── App.jsx           # Root layout and component assembly
-│   ├── main.jsx          # Entry point
-│   └── index.css         # Global styling and custom animations
-├── package.json          # Project dependencies and scripts
-└── vite.config.js        # Vite configuration
+```sh
+npm install
+npm run dev      # local dev server
+npm run build    # production build into dist/
+npm run preview  # serve the production build
+npm run lint
+npm run og       # regenerate public/og-card.png and .svg
 ```
 
-## 📬 Contact
+## Structure
 
-**Sai Monica R.** 
-- Email: [sai.monica444@gmail.com](mailto:sai.monica444@gmail.com)
-- LinkedIn: [linkedin.com/in/saimonica](https://www.linkedin.com/in/saimonica)
-- GitHub: [github.com/SaiMonica10](https://github.com/SaiMonica10)
-- LeetCode: [leetcode.com/u/saimonica10](https://leetcode.com/u/saimonica10/)
-
----
-*Built with ❤️ using React and AI.*
+```text
+src/
+  data/content.js     all site content
+  hooks/              mode, theme, sound, visited-sections state
+  components/         HUD, pixel sprites, link list
+  game/               start screen, world map, section screens
+  recruiter/          Recruiter Mode page
+  styles/             palette + theme tokens, game and recruiter styles
+scripts/make-og.mjs   social card generator
+```
