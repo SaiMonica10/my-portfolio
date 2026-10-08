@@ -1,51 +1,140 @@
-import React, { useState, useEffect } from 'react';
-import Background3D from './components/Background3D';
-import Hero from './components/Hero';
-import About from './components/About';
-import EducationSkills from './components/EducationSkills';
-import Experience from './components/Experience';
-import Projects from './components/Projects';
-import Footer from './components/Footer';
-import './index.css';
+import { useCallback, useEffect, useState } from 'react';
+import Hud from './components/Hud';
+import { sections, XP_PER_SECTION } from './data/content';
+import Scenery from './game/Scenery';
+import SectionView from './game/SectionView';
+import StartScreen from './game/StartScreen';
+import WorldMap from './game/WorldMap';
+import { useMode } from './hooks/useMode';
+import { useSound } from './hooks/useSound';
+import { useTheme } from './hooks/useTheme';
+import { useVisited } from './hooks/useVisited';
+import RecruiterPage from './recruiter/RecruiterPage';
 
-import Navbar from './components/Navbar';
+const SECTION_IDS = sections.map((s) => s.id);
+
+// The open section lives in the URL hash (#levels), so sections can be linked
+// to and the browser Back button returns to the map.
+function sectionFromHash() {
+  const id = window.location.hash.slice(1);
+  return SECTION_IDS.includes(id) ? id : null;
+}
 
 function App() {
-  const [loading, setLoading] = useState(true);
+  const [mode, setModeRaw] = useMode();
+  const [theme, toggleTheme] = useTheme();
+  const { muted, toggleMute, play } = useSound();
+  const [visited, visit] = useVisited();
+  const [openId, setOpenId] = useState(sectionFromHash);
+  const [started, setStarted] = useState(() => sectionFromHash() !== null);
+  const [selected, setSelected] = useState(() => sectionFromHash() ?? SECTION_IDS[0]);
+  const [toast, setToast] = useState(0);
+
+  const isGame = mode === 'game';
+
+  // Switching modes clears the hash, so drop the open section with it.
+  const setMode = useCallback(
+    (next) => {
+      setOpenId(null);
+      setModeRaw(next);
+    },
+    [setModeRaw],
+  );
+
+  const showSection = useCallback(
+    (id) => {
+      setOpenId(id);
+      if (id) {
+        setSelected(id);
+        if (!visited.includes(id)) setToast((count) => count + 1);
+        visit(id);
+      }
+    },
+    [visit, visited],
+  );
+
+  // The "+100 XP" pop-up shows briefly each time a new section is discovered.
+  useEffect(() => {
+    if (!toast) return undefined;
+    const timer = setTimeout(() => setToast(0), 1600);
+    return () => clearTimeout(timer);
+  }, [toast]);
 
   useEffect(() => {
-    // Simulate loading time for 3D assets and animations
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
+    const onHashChange = () => showSection(sectionFromHash());
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, [showSection]);
 
-  if (loading) {
-    return (
-      <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: '#050508' }}>
-        <div className="loader" style={{ width: '50px', height: '50px', border: '3px solid rgba(0,229,255,0.3)', borderTop: '3px solid #00e5ff', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
-        <h2 style={{ marginTop: '20px', fontFamily: 'Outfit, sans-serif', color: '#fff', letterSpacing: '2px' }}>INITIALIZING AI PROTOCOLS...</h2>
-        <style dangerouslySetInnerHTML={{ __html: `
-          @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        `}} />
-      </div>
-    );
-  }
+  // A section opened straight from a shared link still counts as visited.
+  useEffect(() => {
+    const id = sectionFromHash();
+    if (id) visit(id);
+  }, [visit]);
+
+  const openSection = useCallback(
+    (id) => {
+      play('open');
+      window.location.hash = id;
+    },
+    [play],
+  );
+
+  const closeSection = useCallback(() => {
+    play('back');
+    window.history.pushState(null, '', window.location.pathname + window.location.search);
+    setOpenId(null);
+  }, [play]);
+
+  useEffect(() => {
+    if (!isGame || !openId) return undefined;
+    const onKey = (event) => {
+      if (event.key === 'Escape') closeSection();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isGame, openId, closeSection]);
+
+  const start = useCallback(() => {
+    play('start');
+    setStarted(true);
+  }, [play]);
+
+  const goHome = () => {
+    if (openId) closeSection();
+    setStarted(false);
+    window.scrollTo(0, 0);
+  };
+
+  let screen;
+  if (!isGame) screen = <RecruiterPage />;
+  else if (!started) screen = <StartScreen onStart={start} onRecruiterMode={() => setMode('recruiter')} />;
+  else if (openId) screen = <SectionView id={openId} onBack={closeSection} />;
+  else screen = <WorldMap selected={selected} visited={visited} onSelect={setSelected} onOpen={openSection} play={play} />;
 
   return (
-    <>
-      <Background3D />
-      <Navbar />
-      <main className="interactive-area">
-        <Hero />
-        <About />
-        <EducationSkills />
-        <Experience />
-        <Projects />
-        <Footer />
-      </main>
-    </>
+    <div className="app" data-mode={mode}>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <Hud
+        mode={mode}
+        onModeChange={setMode}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+        muted={muted}
+        onToggleMute={toggleMute}
+        visited={visited}
+        onHome={goHome}
+      />
+      {isGame && !openId && <Scenery />}
+      {screen}
+      {isGame && toast > 0 && (
+        <p key={toast} className="toast" aria-hidden="true">
+          +{XP_PER_SECTION} XP
+        </p>
+      )}
+    </div>
   );
 }
 

@@ -1,0 +1,159 @@
+/* Self-hosted fonts (both SIL Open Font License), latin subset. They are
+   preloaded in index.html so text does not shift when they arrive. */
+@font-face {
+  font-family: 'Press Start 2P';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/press-start-2p.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter.woff2') format('woff2-variations');
+}
+
+/* Palette: 12 colors. Everything else is a semantic alias of these. */
+:root {
+  --ink: #14121f;
+  --night: #24213a;
+  --stone: #4a4768;
+  --mist: #b9b4d0;
+  --paper: #f4efe1;
+  --cream: #fffaf0;
+  --grass: #5fcf65;
+  --dirt: #c98a52;
+  --sky: #5ab8f5;
+  --gold: #ffcf3f;
+  --red: #ff5d5d;
+  --navy: #1b4a86;
+
+  --font-pixel: 'Press Start 2P', ui-monospace, monospace;
+  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Dark theme (default) */
+  --bg: var(--ink);
+  --surface: var(--night);
+  --text: var(--paper);
+  --muted: var(--mist);
+  --border: var(--stone);
+  --heading: var(--gold);
+  --link: var(--sky);
+  --focus: var(--gold);
+  --shadow: var(--stone);
+  color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  --bg: var(--paper);
+  --surface: var(--cream);
+  --text: var(--ink);
+  --muted: var(--stone);
+  --border: var(--ink);
+  --heading: var(--navy);
+  --link: var(--navy);
+  --focus: var(--navy);
+  --shadow: var(--ink);
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+dl,
+dd {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--link);
+  text-underline-offset: 3px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -80px;
+  z-index: 20;
+  padding: 8px 12px;
+  background: var(--gold);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 8px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.link-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
